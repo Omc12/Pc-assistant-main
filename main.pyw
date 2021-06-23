@@ -3,41 +3,17 @@
 import pywhatkit
 import pyttsx3
 import speech_recognition as sr
-import datetime
 import wikipedia
+import datetime
+import os
 import pyjokes
 import webbrowser
 import tkinter as tk
-import ctypes
-import color
-import time
-import requests
-import os
-import winshell
 import warnings
-import indic_transliteration
-import flask_googletrans
-import subprocess
-import shutil
-import json
-import random
-import operator
-import numpy as np
-import cv2
-import win32com.client as wincl
-from urllib.request import urlopen
+from datetime import time
 from time import ctime
-from color import color
 from ecapture import ecapture as ec
-from bs4 import BeautifulSoup
-import wolframalpha
-from tkinter import messagebox
-from kivy.app import App
 from tkinter import *
-from tkinter.ttk import *
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from googletrans import Translator
 
 warnings.filterwarnings('ignore')
 
@@ -70,15 +46,14 @@ def take_command():
             voice = listener.listen(source)
             command = listener.recognize_google(voice)
             command = command.lower()
-        if 'assistant' in command:
+        if 'chroma' in command:
          run_assistant()
 
     except:
         pass
     return command
 
-class run_assistant(App):
- def build(self):
+def run_assistant():
     talk("How can i Help you")
     print("Assistant Running..!")
     talk("Please speak now")
@@ -136,6 +111,11 @@ class run_assistant(App):
         info = wikipedia.summary(person, 1)
         print(info)
         talk(info)
+    elif 'which' in command:
+        person = command.replace('which', 'which')
+        info = wikipedia.summary(person, 1)
+        print(info)
+        talk(info)
     elif 'help' in command:
         person = command.replace('help', 'help')
         info = wikipedia.summary(person, 1)
@@ -190,8 +170,8 @@ class run_assistant(App):
         talk("Here you go to amazon.in\n")
         webbrowser.get('chrome').open("amazon.in")
 
-    elif 'open fortnite dot com' in command:
-        talk("Here you go to fortnite.com\n")
+    elif 'open fortnite' in command:
+        talk("Here you go to fortnite\n")
         webbrowser.get('chrome').open("fortnite.com")
 
     elif 'open topper' in command:
@@ -209,40 +189,40 @@ class run_assistant(App):
     elif "camera" in command or "take a photo" in command:
         ec.capture(0, " CamZ ", "img.jpg")
 
-    #elif 'shutdown' in command:
-        #talk("Hold On a Sec ! Your system is on its way to shut down")
-       # os.system('shutdown /l')
+    elif 'shutdown' in command:
+        talk("Hold On a Sec ! Your system is on its way to shut down")
+        os.system('shutdown /s /t 1')
 
-    #elif "restart" in command:
-        #os.system(["shutdown", "/r"]);
+    elif "restart" in command:
+        os.system('shutdown /r /t 1')
 
-    #elif "hibernate" in command or "sleep" in command:
-        #talk("Hibernating")
-       # os.system("shutdown / s");
+    elif "sign out" in command or "sign out" in command:
+        talk("Make sure all the application are closed before sign-out")
+        os.system('shutdown -l')
 
-    #elif "log off" in command or "sign out" in command:
-      #  talk("Make sure all the application are closed before sign-out")
-     #   time.sleep(5)
-    #    os.system(["shutdown", "/l"]);
+    elif "hibernate" in command or "sleep" in command:
+        talk("Hibernating")
+        time.sleep(5)
+        os.system('shutdown -d -t 0')
 
     elif "good morning" in command:
         talk("A warm" + command)
-        talk("How are you oom")
+        talk("How are you")
 
     elif "good afternoon" in command:
         talk("" + command)
-        talk("How are you oom")
+        talk("How are you")
 
     elif "good evening" in command:
         talk("same to you")
-        talk("How are you oom")
+        talk("How are you")
 
     elif "good night" in command:
         talk("good night")
-        talk("How are you oom")
+        talk("How are you")
 
-    elif "exit" in command:
-        talk("are you sure")
+    elif "launch window" in command:
+        talk("window is on its way!")
         root = tk.Tk()
         frame = tk.Frame(root)
         frame.pack()
@@ -264,4 +244,3 @@ class run_assistant(App):
 
 while True:
     run_assistant()
-
